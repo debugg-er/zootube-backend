@@ -14,6 +14,7 @@ services:
       DB_NAME: ${DB_NAME}
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRE_TIME: ${JWT_EXPIRE_TIME}
+      SALT_ROUND: ${SALT_ROUND}
       STATIC_SERVER_ENDPOINT: http://static:80
       NODE_ENV: production
     command: sh -c "
@@ -28,6 +29,7 @@ services:
     image: static:latest
     container_name: static
     environment:
+      GIN_MODE: release
       PORT: 80
     volumes:
       - "mediadata:/app/static"
