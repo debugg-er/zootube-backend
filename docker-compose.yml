@@ -19,6 +19,7 @@ services:
     command: sh -c "
         ./wait-for -t 60 db:5432
         && ./wait-for -t 60 static:80
+        && npm run migration:run
         && npm start"
     volumes:
       - "./log:/app/.log"
