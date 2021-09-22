@@ -14,20 +14,20 @@ services:
       DB_NAME: ${DB_NAME}
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRE_TIME: ${JWT_EXPIRE_TIME}
-      STATIC_SERVER_ENDPOINT: http://static:80
+      MEDIA_SERVER_ENDPOINT: http://media:80
       NODE_ENV: production
     command: sh -c "
         ./wait-for -t 60 db:5432
-        && ./wait-for -t 60 static:80
+        && ./wait-for -t 60 media:80
         && npm run migration:run
         && npm start"
     volumes:
       - "./log:/app/.log"
 
-  static:
-    build: ./static
-    image: static:latest
-    container_name: static
+  media:
+    build: ./media
+    image: media:latest
+    container_name: media
     environment:
       PORT: 80
     volumes:
