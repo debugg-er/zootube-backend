@@ -33,6 +33,15 @@ services:
     volumes:
       - "mediadata:/app/static"
 
+  chat:
+    build: ./chat
+    image: chat:latest
+    container_name: chat
+    environment:
+      PORT: 80
+      JWT_SECRET: ${JWT_SECRET}
+      MAX_MESSAGES_LENGTH: 30
+
   db:
     image: postgres:alpine
     container_name: db
