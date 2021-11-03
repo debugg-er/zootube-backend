@@ -24,6 +24,18 @@ services:
     volumes:
       - "./log:/app/.log"
 
+  live:
+    build: ./live
+    image: live:latest
+    container_name: live
+    environment:
+      HTTP_PORT: 80
+      RTMP_PORT: 1935
+      API_SERVER_ENDPOINT: http://api:80
+    command: sh -c "
+        ./wait-for -t 60 api:80
+        && npm start"
+
   media:
     build: ./media
     image: media:latest
@@ -57,8 +69,9 @@ services:
     container_name: server
     ports:
       - "8080:80"
+      - "1935:1935"
     volumes:
-      - "./default.conf:/etc/nginx/conf.d/default.conf"
+      - "./nginx.conf:/etc/nginx/nginx.conf"
 
 volumes:
   dbdata:
