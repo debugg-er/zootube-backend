@@ -12,6 +12,7 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
+      REDIS_HOST: redis
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRE_TIME: ${JWT_EXPIRE_TIME}
       MEDIA_SERVER_ENDPOINT: http://media:80
@@ -53,6 +54,17 @@ services:
       PORT: 80
       JWT_SECRET: ${JWT_SECRET}
       MAX_MESSAGES_LENGTH: 30
+      REDIS_HOST: redis
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    command:
+      - 'redis-server'
+      - '--save 60 1'
+      - '--loglevel warning'
+    volumes:
+      - "redisdata:/var/lib/redis"
 
   db:
     image: postgres:alpine
@@ -61,6 +73,8 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
+      TZ: 'GMT'
+      PGTZ: 'GMT'
     volumes:
       - "dbdata:/var/lib/postgresql/data"
 
@@ -76,3 +90,4 @@ services:
 volumes:
   dbdata:
   mediadata:
+  redisdata:
