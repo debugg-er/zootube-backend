@@ -44,6 +44,7 @@ services:
     image: media:latest
     container_name: media
     environment:
+      API_SERVER_ENDPOINT: http://api:80
       PORT: 80
     volumes:
       - "mediadata:/app/static"
