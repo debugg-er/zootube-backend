@@ -34,6 +34,7 @@ services:
       RTMP_PORT: 1935
       API_SERVER_ENDPOINT: http://api:80
       MEDIA_SERVER_ENDPOINT: http://media:80
+      HLS_TIME: ${HLS_TIME}
     command: sh -c "
         ./wait-for -t 60 media:80
         && ./wait-for -t 60 api:80
