@@ -16,7 +16,6 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRE_TIME: ${JWT_EXPIRE_TIME}
       MEDIA_SERVER_ENDPOINT: http://media:80
-      NODE_ENV: development
     command: sh -c "
         ./wait-for -t 60 db:5432
         && ./wait-for -t 60 media:80
@@ -49,6 +48,10 @@ services:
       PORT: 80
     volumes:
       - "mediadata:/app/static"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
 
   chat:
     build: ./chat
